@@ -2,6 +2,7 @@
 using namespace std;
 class Transport{
 public:
+	Transport() {}
 	Transport(int speed,int capacity){
 		speed_ = speed;
 		capacity_ = capacity;
@@ -15,68 +16,113 @@ public:
 	void set_capacity(int capacity) {
 		capacity_ = capacity;
 	}
+	int get_capacity() {
+		return capacity_;
+	}
 	virtual void skill() {
-		cout << "";
+		cout << " ";
 	}
 private:
-	int speed_;
-	int capacity_;
+	int speed_=0;
+	int capacity_=0;
 
 };
 
 
-class Motor_transport:virtual public Transport {
+class Motorized:virtual public Transport {
 public:
-	Motor_transport(int speed, int capacity):Transport(speed, capacity) {}
+	Motorized(){}
+	Motorized(int speed, int capacity) :Transport(speed, capacity) {}
+	
 	
 	
 };
 
-class Electro_car:public Motor_transport {
+class Electro_car:public Motorized {
 public:
-	Electro_car(int speed, int capacity) :Motor_transport(speed, capacity),Transport(speed, capacity){}
+	Electro_car(){}
+	Electro_car(int speed, int capacity,int energy_intensity) :Motorized(speed, capacity), Transport(speed, capacity) {
+		energy_intensity_ = energy_intensity_;
 
+	}
+	void set_energy_intensity(int volume) {
+		energy_intensity_ = volume;
+	}
+	int get_energy_intensity() {
+		return energy_intensity_;
+	}
 	void skill()override {
-		cout << "Заряжаться!";
+		cout << "заряжаться электричеством!\n";
+	}
+private:
+	int energy_intensity_ = 0;
+
+		
+
+};
+
+class DVS_car :public Motorized {
+public:
+	DVS_car(){}
+	DVS_car(int speed, int capacity, int engine_capacity) :Motorized(speed, capacity), Transport(speed, capacity) {
+		engine_capacity_ = engine_capacity;
+	}
+
+void set_engine_capacity(int volume) {
+	engine_capacity_ = volume;
+}
+int get_engine_capacity() {
+	return engine_capacity_;
+}
+void skill()override {
+	cout << "заряжаться топливом!\n";
+}
+private:
+	//объем двигателя
+	int engine_capacity_ = 0;
+
+};
+
+class Muscular:virtual public Transport {
+public:
+	Muscular(){}
+	Muscular(int speed, int capacity) :Transport(speed, capacity) {}
+	
+
+
+
+};
+
+class Scooter:public Muscular {
+public:
+	Scooter(){}
+	void movement() {
+		cout << "Крутить педали";
 	}
 
 
+
 };
-
-class DVS_car :public Motor_transport {
+class Bike :public Muscular {
 public:
-
-	void skill()override {
-		cout << "Заправляться!";
+	Bike(){}
+	void sound() {
+		cout << "Дзынь-Дзынь\n";
 	}
-
+	int get_wheels() {
+		return wheels;
+	}
+private:
+	 int wheels = 2;
+	
 };
 
 
-
-
-class Muscle_transport:public Transport {
+class Electro_bike:public Bike,public Electro_car {
 public:
-
-
-
-};
-
-class Scooter:public Muscle_transport {
-public:
-
-
-};
-class Bike :public Muscle_transport {
-public:
-
-
-};
-
-
-class Electro_bike:public Muscle_transport,public Motor_transport {
-
-
+	Electro_bike(){}
+	Electro_bike(int speed, int capacity, int energy_intensity):Electro_car(speed,capacity,energy_intensity),Bike(){}
+	
 };
 
 
@@ -88,10 +134,16 @@ class Electro_bike:public Muscle_transport,public Motor_transport {
 
 int main() {
 	system("chcp 1251>nul");
-
-
-
-
+	Electro_bike bike;
+	cout << "Метод: "; bike.skill();
+	bike.set_speed(30);
+	cout << "Скорость: "<< bike.get_speed();
+	cout <<"\nВместимость: "<< bike.get_wheels();
+	bike.set_energy_intensity(900);
+	cout << "\nобъем батареии: "<<bike.get_energy_intensity();
+	cout << "\nЗвук:"; bike.sound();
+	
+	
 
 
 
