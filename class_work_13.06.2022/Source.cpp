@@ -1,6 +1,14 @@
 #include<iostream>
+#include<string>
 using namespace std;
-class Transport{
+//class iNameable {
+//public:
+//	virtual const char *getName()const = 0;
+//	virtual const string set_name() = 0;
+//};
+
+
+class Transport/*:public iNameable*/{
 public:
 	Transport() {}
 	Transport(int speed,int capacity){
@@ -23,6 +31,9 @@ public:
 		cout << " ";
 	}
 virtual void move() const = 0;
+//virtual const char *getName()const = 0;
+//virtual const string set_name() = 0;
+
 	
 private:
 	int speed_=0;
