@@ -22,6 +22,8 @@ public:
 	virtual void skill() {
 		cout << " ";
 	}
+virtual void move() const = 0;
+	
 private:
 	int speed_=0;
 	int capacity_=0;
@@ -33,7 +35,6 @@ class Motorized:virtual public Transport {
 public:
 	Motorized(){}
 	Motorized(int speed, int capacity) :Transport(speed, capacity) {}
-	
 	
 	
 };
@@ -53,6 +54,9 @@ public:
 	}
 	void skill()override {
 		cout << "заряжаться электричеством!\n";
+	}
+	void move()const {
+		cout << "тихо ехать";
 	}
 private:
 	int energy_intensity_ = 0;
@@ -77,6 +81,13 @@ int get_engine_capacity() {
 void skill()override {
 	cout << "заряжаться топливом!\n";
 }
+
+
+void move()const {
+	cout << "громко ехать";
+}
+
+
 private:
 	//объем двигателя
 	int engine_capacity_ = 0;
@@ -96,7 +107,7 @@ public:
 class Scooter:public Muscular {
 public:
 	Scooter(){}
-	void movement() {
+void movement() {
 		cout << "Крутить педали";
 	}
 
@@ -106,6 +117,7 @@ public:
 class Bike :public Muscular {
 public:
 	Bike(){}
+	Bike(int speed, int capacity):Muscular( speed, capacity),Transport(speed, capacity) {}
 	void sound() {
 		cout << "Дзынь-Дзынь\n";
 	}
@@ -114,7 +126,6 @@ public:
 	}
 private:
 	 int wheels = 2;
-	
 };
 
 
@@ -122,7 +133,6 @@ class Electro_bike:public Bike,public Electro_car {
 public:
 	Electro_bike(){}
 	Electro_bike(int speed, int capacity, int energy_intensity):Electro_car(speed,capacity,energy_intensity),Bike(){}
-	
 };
 
 
@@ -134,7 +144,9 @@ public:
 
 int main() {
 	system("chcp 1251>nul");
+
 	Electro_bike bike;
+
 	cout << "Метод: "; bike.skill();
 	bike.set_speed(30);
 	cout << "Скорость: "<< bike.get_speed();
@@ -142,7 +154,8 @@ int main() {
 	bike.set_energy_intensity(900);
 	cout << "\nобъем батареии: "<<bike.get_energy_intensity();
 	cout << "\nЗвук:"; bike.sound();
-	
+	bike.move();
+
 	
 
 
